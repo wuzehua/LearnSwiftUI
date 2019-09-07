@@ -13,7 +13,6 @@ struct LandmarkList: View {
     
     var body: some View {
         
-        NavigationView{
             List{
                 
                 Toggle(isOn: $userData.showFavoriteOnly){
@@ -23,20 +22,25 @@ struct LandmarkList: View {
                 ForEach(userData.landmarks){ landmark in
                 
                     if landmark.isFavorite || !self.userData.showFavoriteOnly {
-                        NavigationLink(destination: LandmarkDetail(landmark: landmark)){
+                        NavigationLink(destination:
+                            LandmarkDetail(landmark: landmark)
+                                .environmentObject(self.userData)
+                        ){
                             LandmarkRow(landmark: landmark)
+                            
                         }
                     }
                 }
             }
-            
             .navigationBarTitle(Text("Landmarks"))
-        }
+        
     }
 }
 
 struct LandmarkList_Previews: PreviewProvider {
     static var previews: some View {
-        LandmarkList().environmentObject(UserData())
+        NavigationView{
+            LandmarkList()
+        }.environmentObject(UserData())
     }
 }

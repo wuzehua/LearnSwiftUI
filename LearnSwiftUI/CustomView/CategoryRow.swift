@@ -23,8 +23,9 @@ struct CategoryRow: View {
             ScrollView(.horizontal, showsIndicators: false){
                 HStack(alignment: .top, spacing: 0){
                     ForEach(self.items){ landmark in
-                        
-                       CategoryItem(landmark: landmark)
+                        NavigationLink(destination: LandmarkDetail(landmark: landmark)){
+                            CategoryItem(landmark: landmark)
+                        }
                     }
                 }
             }.frame(height: 185)
@@ -39,12 +40,15 @@ struct CategoryItem: View {
         VStack(alignment: .leading){
             landmark.image
                 .resizable()
+                .renderingMode(.original)
                 .frame(width: 155, height: 155)
                 .cornerRadius(5)
                 .shadow(radius: 3)
             
             Text(landmark.name)
                 .font(.caption)
+                .foregroundColor(.primary)
+            
         }.padding(.leading, 15)
          //.padding(.top, 10)
     }
@@ -56,13 +60,22 @@ struct FeaturedLandmarkItem: View{
     var body: some View{
         
         ZStack(alignment: .bottomLeading){
-            landmark.image.resizable()
+            landmark.image
+                .resizable()
+                .renderingMode(.original)
+            
             VStack(alignment:.leading){
                 Text(landmark.name)
                     .font(.title)
+                    .foregroundColor(.white)
+                    .shadow(radius: 2)
                 Text(landmark.park)
                     .font(.subheadline)
+                    .foregroundColor(.white)
+                .shadow(radius: 2)
+
             }.padding()
+            
         }
         
     }
@@ -72,10 +85,15 @@ struct FeaturedLandmarks: View {
     var landmarks: [Landmark]
     var body: some View{
         ScrollView(.horizontal, showsIndicators: false){
-            ForEach(landmarks){ landmark in
-                FeaturedLandmarkItem(landmark: landmark)
+            HStack{
+                ForEach(landmarks){ landmark in
+                    NavigationLink(destination: LandmarkDetail(landmark: landmark)){
+                        FeaturedLandmarkItem(landmark: landmark)
+                    }
+                }
             }
         }
+        
     }
 }
 
@@ -84,5 +102,6 @@ struct CategoryRow_Previews: PreviewProvider {
 //        CategoryRow(categoryName: landmarkData[0].category.rawValue, items: Array(landmarkData.prefix(4)))
         
         FeaturedLandmarks(landmarks: Array(landmarkData.prefix(4)))
+        
     }
 }
