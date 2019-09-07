@@ -52,7 +52,9 @@ struct ProfileSummary: View {
                     .font(.headline)
                 
                 HikeView(hike: hikeData[0])
-            }
+                
+                Spacer()
+            }.frame(height: 330)
         }
     }
 }
