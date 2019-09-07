@@ -21,7 +21,7 @@ extension AnyTransition{
 
 struct HikeView: View {
     var hike: Hike
-    @State var showDetails = true
+    @State var showDetails = false
     
     var body: some View {
         VStack{
@@ -34,6 +34,7 @@ struct HikeView: View {
                         .font(.headline)
                     Text(verbatim: hike.distanceText)
                 }
+                .layoutPriority(1)
                 
                 Spacer()
                 
