@@ -8,14 +8,70 @@
 
 import SwiftUI
 
+extension AnyTransition{
+    static var moveInAndOut: AnyTransition{
+        let insertion = AnyTransition.move(edge: .trailing)
+            .combined(with: .opacity)
+        let removal = AnyTransition.move(edge: .trailing)
+            .combined(with: .opacity)
+        
+        return .asymmetric(insertion: insertion, removal: removal)
+    }
+}
+
 struct HikeView: View {
+    var hike: Hike
+    @State var showDetails = true
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            HStack{
+                HikeGraph(hike: hike, path: \.elevation)
+                    .frame(width: 50, height: 30)
+                
+                VStack(alignment: .leading){
+                    Text(verbatim: hike.name)
+                        .font(.headline)
+                    Text(verbatim: hike.distanceText)
+                }
+                
+                Spacer()
+                
+                Button(action:{
+                    withAnimation{
+                        self.showDetails.toggle()
+                    }
+                }){
+                    Image(systemName: "chevron.right.circle")
+                        .imageScale(.large)
+                        .rotationEffect(.degrees(showDetails ? 90 : 0))
+                        .scaleEffect(showDetails ? 1.5 : 1.0)
+                        .padding()
+                        //.animation(.spring())
+                }
+            }
+            //.padding()
+            
+            
+            
+            
+            
+            if showDetails{
+                HikeDetail(hike: hike)
+                    .transition(.moveInAndOut)
+            }
+        }
     }
 }
 
 struct HikeView_Previews: PreviewProvider {
     static var previews: some View {
-        HikeView()
+        
+        VStack{
+            HikeView(hike: hikeData[0])
+                .padding()
+            
+            Spacer()
+        }
     }
 }
