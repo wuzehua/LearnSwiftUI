@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ProfileSummary: View {
-    @State var profile = Profile.default
+    @State var profile: Profile
     
     static let formatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -18,33 +18,36 @@ struct ProfileSummary: View {
     }()
     
     var body: some View {
-        List{
-            Text(profile.userName)
-                .font(.title)
-                .bold()
-            
-            Text("Notification: \(profile.preferNotifications ? "On" : "Off")")
-            
-            Text("Season: \(profile.seasonPhoto.rawValue)")
-            
-            Text("Goal Date: \(profile.goalDate, formatter: ProfileSummary.formatter)")
-            
-            VStack(alignment: .leading){
-                Text("Completed Badges")
-                    .font(.headline)
-                
-                ScrollView(.horizontal, showsIndicators: false){
-                    HStack{
-                        HikeBadge(name: "First Hike")
+        VStack(alignment: .leading, spacing: 20) {
+            List{
+                    Text(profile.userName)
+                        .font(.title)
+                        .bold()
+                    
+                    Text("Notification: \(profile.preferNotifications ? "On" : "Off")")
+                    
+                    Text("Season: \(profile.seasonPhoto.rawValue)")
+                    
+                    Text("Goal Date: \(profile.goalDate, formatter: ProfileSummary.formatter)")
+                    
+                    VStack(alignment: .leading){
+                        Text("Completed Badges")
+                            .font(.headline)
                         
-                        HikeBadge(name: "Earth Day")
-                            .hueRotation(Angle(degrees: 90))
-                        
-                        HikeBadge(name: "Tenth Hike")
-                            .grayscale(0.5)
-                            .hueRotation(Angle(degrees: 45))
+                        ScrollView(.horizontal, showsIndicators: false){
+                            HStack{
+                                HikeBadge(name: "First Hike")
+                                
+                                HikeBadge(name: "Earth Day")
+                                    .hueRotation(Angle(degrees: 90))
+                                
+                                HikeBadge(name: "Tenth Hike")
+                                    .grayscale(0.5)
+                                    .hueRotation(Angle(degrees: 45))
+                            }
+                        }
                     }
-                }.frame(height: 140)
+
             }
             
             VStack(alignment: .leading){
@@ -54,13 +57,15 @@ struct ProfileSummary: View {
                 HikeView(hike: hikeData[0])
                 
                 Spacer()
-            }.frame(height: 330)
+                
+            }.padding()
         }
+            
     }
 }
 
 struct ProfileSummary_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileSummary()
+        ProfileSummary(profile: Profile.default)
     }
 }

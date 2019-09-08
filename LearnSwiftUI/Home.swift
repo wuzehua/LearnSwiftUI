@@ -47,6 +47,7 @@ struct CategoryHome: View {
                 }
                 .listRowInsets(EdgeInsets())
                 
+                
                 NavigationLink(destination: LandmarkList())
                 {
                     Text("See all")
@@ -55,9 +56,9 @@ struct CategoryHome: View {
             .navigationBarTitle(Text("Featured"))
             .navigationBarItems(trailing: profileButton)
             .sheet(isPresented: $showProfile){
-               ProfileHost()
+                ProfileHost()
             }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
