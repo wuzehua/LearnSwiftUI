@@ -54,54 +54,10 @@ struct CategoryItem: View {
     }
 }
 
-struct FeaturedLandmarkItem: View{
-    var landmark: Landmark
-    
-    var body: some View{
-        
-        ZStack(alignment: .bottomLeading){
-            landmark.image
-                .resizable()
-                .renderingMode(.original)
-            
-            VStack(alignment:.leading){
-                Text(landmark.name)
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .shadow(radius: 2)
-                Text(landmark.park)
-                    .font(.subheadline)
-                    .foregroundColor(.white)
-                .shadow(radius: 2)
-
-            }.padding()
-            
-        }
-        
-    }
-}
-
-struct FeaturedLandmarks: View {
-    var landmarks: [Landmark]
-    var body: some View{
-        ScrollView(.horizontal, showsIndicators: false){
-            HStack{
-                ForEach(landmarks){ landmark in
-                    NavigationLink(destination: LandmarkDetail(landmark: landmark)){
-                        FeaturedLandmarkItem(landmark: landmark)
-                    }
-                }
-            }
-        }
-        
-    }
-}
 
 struct CategoryRow_Previews: PreviewProvider {
     static var previews: some View {
-//        CategoryRow(categoryName: landmarkData[0].category.rawValue, items: Array(landmarkData.prefix(4)))
-        
-        FeaturedLandmarks(landmarks: Array(landmarkData.prefix(4)))
+        CategoryRow(categoryName: "Test", items: Array(landmarkData.prefix(4)))
         
     }
 }

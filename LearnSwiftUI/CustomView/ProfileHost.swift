@@ -23,27 +23,33 @@ struct ProfileHost: View {
             if self.mode?.wrappedValue == .inactive{
                 HStack{
                     Spacer()
-                    EditButton()
+                    Button(action: {
+                        self.mode?.animation().wrappedValue = .active
+                    }){
+                        Text("Edit")
+                    }
                 }
                 
                 ProfileSummary(profile: profile)
             }
             else{
                 
-                HStack{
-                    Button(action: {
-                        self.profile = self.draftProfile
-                        self.mode?.animation().wrappedValue = .inactive
-                    }){
-                        Text("Done").bold()
-                    }
+                if self.mode?.wrappedValue == .active{
+                    HStack{
+                        Button(action: {
+                            self.profile = self.draftProfile
+                            self.mode?.animation().wrappedValue = .inactive
+                        }){
+                            Text("Done").bold()
+                        }
                     
-                    Spacer()
+                        Spacer()
                     
-                    Button(action:{
-                        self.mode?.animation().wrappedValue = .inactive
-                    }){
-                        Text("Cancel")
+                        Button(action:{
+                            self.mode?.animation().wrappedValue = .inactive
+                        }){
+                            Text("Cancel")
+                        }
                     }
                 }
                 

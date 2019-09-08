@@ -34,12 +34,9 @@ struct CategoryHome: View {
         
         NavigationView{
             List{
-                FeaturedLandmarks(landmarks: featuredLandmarks)
-                    .scaledToFill()
-                    .frame(height: 200)
-                    .clipped()
-                    .listRowInsets(EdgeInsets())
-                
+
+                PageView(features.map{ FeaturedCard(landmark: $0)})
+                    .aspectRatio(1.5, contentMode: .fit)
                 
                 ForEach(categories.keys.sorted(), id: \.self){ key in
                     CategoryRow(categoryName: key, items: self.categories[key]!)
